@@ -233,6 +233,11 @@
                     sequencer.stop();
                 }
             });
+            this.el.addEventListener('change', function (event) {
+                if (targetMatchesClass(event, 'js-tempo')) {
+                    sequencer.setTempo(parseInt(event.target.value, 10));
+                }
+            });
         };
     }
 

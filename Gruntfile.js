@@ -2,7 +2,10 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         jshint : {
-            all : ['Gruntfile.js', 'js/**/*.js']
+            all : ['Gruntfile.js', 'js/**/*.js'],
+            options : {
+                jshintrc : true
+            }
         },
         // concat : {
         //     dist : {
@@ -26,6 +29,10 @@ module.exports = function (grunt) {
             },
             css : {
                 files : ['www/**/*.css'],
+            },
+            gruntfile : {
+                files : ['Gruntfile.js'],
+                tasks : ['jshint']
             },
             scripts : {
                 files : ['js/**/*.js'],

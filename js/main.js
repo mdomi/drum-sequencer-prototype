@@ -25,14 +25,6 @@
         });
     }
 
-    function getStorageBoolean(key) {
-        return window.localStorage[key] === 'true';
-    }
-
-    function setStorageBoolean(key, value) {
-        window.localStorage[key] = value; // will get converted into a string
-    }
-
     function Square() {
         this.el = document.createElement('span');
         this.el.classList.add('sequencer-square');
@@ -44,7 +36,7 @@
         };
 
         this.deactivate = function () {
-            this.el.classList.remove('sequencer-square-active');  
+            this.el.classList.remove('sequencer-square-active');
         };
 
         this.toggle = function () {
@@ -77,18 +69,33 @@
         return new Date().getTime();
     }
 
+    function createVolumeInput() {
+        var input = document.createElement('input');
+        input.type = 'range';
+        input.min = 0;
+        input.max = 100;
+        input.value = 50;
+        return input;
+    }
+
     function SequencerRow(width, context) {
         this.el = document.createElement('div');
 
-        var squares = [],
+        var node = context.createGainNode(),
+            squares = [],
             active,
             input = document.createElement('input'),
+            volumeControl = createVolumeInput(),
             buffer;
+
+        node.connect(context.destination);
+        node.gain.value = volumeControl.value / 100.0;
 
         input.type = 'file';
 
         squares = times(width, Square.create);
 
+        this.el.appendChild(volumeControl);
         squares.forEach(function (square) {
             this.el.appendChild(square.el);
         }.bind(this));
@@ -99,7 +106,7 @@
             if (buffer) {
                 var source = context.createBufferSource();
                 source.buffer = buffer;
-                source.connect(context.destination);
+                source.connect(node);
                 source.noteOn(0);
             }
         }
@@ -110,6 +117,9 @@
                 readAudioFile(input.files[0], context, function (audioBuffer) {
                     buffer = audioBuffer;
                 });
+            });
+            volumeControl.addEventListener('change', function () {
+                node.gain.value = volumeControl.value / 100.0;
             });
         };
 
@@ -145,7 +155,7 @@
 
         var display = document.createElement('span'),
             tempo = 108,
-            context = new webkitAudioContext(),
+            context = new window.webkitAudioContext(),
             timeout,
             currentBeat,
             length = 16,
@@ -207,7 +217,7 @@
     }
 
     function readFile(file, cb) {
-        var reader = new FileReader();
+        var reader = new window.FileReader();
 
         reader.onload = function () {
             cb(reader.result);
@@ -249,5 +259,7 @@
     document.getElementById('main').appendChild(controller.el);
     controller.bindEvents();
     controls.bindEvents();
+
+    window.controller = controller;
 
 }(this));

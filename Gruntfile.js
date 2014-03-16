@@ -16,7 +16,22 @@ module.exports = function (grunt) {
         uglify : {
             dist : {
                 files : {
-                    'www/js/main.js' : ['js/main.js']
+                    'www/js/main.js' : [
+                        'bower_components/jquery/dist/jquery.js',
+                        'bower_components/bootstrap/dist/js/bootstrap.js',
+                        'js/main.js'
+                    ]
+                }
+            }
+        },
+        cssmin : {
+            dist : {
+                files : {
+                    'www/css/main.css' : [
+                        'bower_components/bootstrap/dist/css/bootstrap.css',
+                        'bower_components/bootstrap/dist/css/bootstrap-theme.css',
+                        'css/main.css'
+                    ]
                 }
             }
         },
@@ -28,7 +43,8 @@ module.exports = function (grunt) {
                 files : ['www/**/*.html'],
             },
             css : {
-                files : ['www/**/*.css'],
+                files : ['css/**/*.css'],
+                tasks : 'cssmin'
             },
             gruntfile : {
                 files : ['Gruntfile.js'],
@@ -50,12 +66,8 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-connect');
+    require('load-grunt-tasks')(grunt);
 
-    grunt.registerTask('default', ['jshint', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'cssmin', 'uglify']);
     grunt.registerTask('serve', ['default', 'connect:server', 'watch']);
 };

@@ -52,13 +52,36 @@
         return tdNode;
     }
 
+    function createButton(text) {
+        var button = document.createElement('button');
+        button.appendChild(document.createTextNode(String(text)));
+        button.classList.add('btn');
+        button.classList.add('btn-default');
+        return button;
+    }
+
+    function createPlayButton(resource) {
+        var button = createButton('Play');
+        button.dataset.resourceKey = resource.name;
+        return button;
+    }
+
     function createTableRow(resource) {
         var trNode = document.createElement('tr');
+        trNode.appendChild(createPlayButton(resource));
         trNode.appendChild(createTableCell(resource.name));
         trNode.appendChild(createTableCell(resource.buffer.duration));
         trNode.appendChild(createTableCell(resource.buffer.sampleRate));
         trNode.appendChild(createTableCell(resource.buffer.numberOfChannels));
         return trNode;
+    }
+
+    function playResource(key, context) {
+        var resource = resources.get(key),
+            source = context.createBufferSource();
+        source.buffer = resource.buffer;
+        source.connect(context.destination);
+        source.noteOn(0);
     }
 
     function ResourcesController(el, context) {
@@ -79,6 +102,12 @@
                 input.value = null;
                 renderList();
             });
+        });
+
+        this.el.addEventListener('click', function (event) {
+            if (event.target.tagName === 'BUTTON') {
+                playResource(event.target.dataset.resourceKey, context);
+            }
         });
 
         renderList();

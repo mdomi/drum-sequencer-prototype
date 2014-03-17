@@ -4,21 +4,20 @@ module.exports = function (grunt) {
         jshint : {
             all : ['Gruntfile.js', 'js/**/*.js'],
             options : {
-                jshintrc : true
+                jshintrc : true,
+                reporter : require('jshint-stylish')
             }
         },
-        // concat : {
-        //     dist : {
-        //         src : ['js/main.js'],
-        //         dest : 'www/js/main.js'
-        //     }
-        // },
         uglify : {
+            options : {
+                compress : false
+            },
             dist : {
                 files : {
                     'www/js/main.js' : [
                         'bower_components/jquery/dist/jquery.js',
                         'bower_components/bootstrap/dist/js/bootstrap.js',
+                        'js/resources.js',
                         'js/main.js'
                     ]
                 }

@@ -1,5 +1,6 @@
 (function (window) {
 
+    var context = new window.webkitAudioContext();
 
     var document = window.document,
         MS_PER_S = 1000,
@@ -84,14 +85,11 @@
         var node = context.createGainNode(),
             squares = [],
             active,
-            input = document.createElement('input'),
             volumeControl = createVolumeInput(),
             buffer;
 
         node.connect(context.destination);
         node.gain.value = volumeControl.value / 100.0;
-
-        input.type = 'file';
 
         squares = times(width, Square.create);
 
@@ -99,8 +97,6 @@
         squares.forEach(function (square) {
             this.el.appendChild(square.el);
         }.bind(this));
-
-        this.el.appendChild(input);
 
         function play() {
             if (buffer) {
@@ -113,11 +109,6 @@
 
         this.bindEvents = function () {
             invoke(squares, 'bindEvents');
-            input.addEventListener('change', function () {
-                readAudioFile(input.files[0], context, function (audioBuffer) {
-                    buffer = audioBuffer;
-                });
-            });
             volumeControl.addEventListener('change', function () {
                 node.gain.value = volumeControl.value / 100.0;
             });
@@ -155,7 +146,6 @@
 
         var display = document.createElement('span'),
             tempo = 108,
-            context = new window.webkitAudioContext(),
             timeout,
             currentBeat,
             length = 16,
@@ -216,22 +206,6 @@
         return event.target.classList.contains(className);
     }
 
-    function readFile(file, cb) {
-        var reader = new window.FileReader();
-
-        reader.onload = function () {
-            cb(reader.result);
-        };
-
-        reader.readAsArrayBuffer(file);
-    }
-
-    function readAudioFile(file, context, cb) {
-        readFile(file, function (arrayBuffer) {
-            context.decodeAudioData(arrayBuffer, cb);
-        });
-    }
-
     function ControlsController(el, sequencer) {
         this.el = el;
 
@@ -261,5 +235,7 @@
     controls.bindEvents();
 
     window.controller = controller;
+
+    new window.controllers.Resources(document.getElementById('resources'), context);
 
 }(this));

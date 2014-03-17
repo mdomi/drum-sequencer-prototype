@@ -66,11 +66,15 @@
         return button;
     }
 
+    function formatTime(time) {
+        return (Math.floor(100 * time) / 100.0) + 's';
+    }
+
     function createTableRow(resource) {
         var trNode = document.createElement('tr');
         trNode.appendChild(createPlayButton(resource));
         trNode.appendChild(createTableCell(resource.name));
-        trNode.appendChild(createTableCell(resource.buffer.duration));
+        trNode.appendChild(createTableCell(formatTime(resource.buffer.duration)));
         trNode.appendChild(createTableCell(resource.buffer.sampleRate));
         trNode.appendChild(createTableCell(resource.buffer.numberOfChannels));
         return trNode;

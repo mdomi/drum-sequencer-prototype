@@ -30,6 +30,9 @@
   color: #fff;
   background-color: #428bca;
 }
+.nav-sidebar > .active:hover > a {
+  background-color: #428bca;
+}
 
 .sequencer-square {
     display: inline-block;
@@ -52,4 +55,8 @@
 .container {
     width: 800px;
     margin: 0 auto;
+}
+
+[type="range"] {
+  display : inline;
 }

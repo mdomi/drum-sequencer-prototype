@@ -1,4 +1,4 @@
-(function (window) {
+(function (window, $) {
 
     var document = window.document,
         resources = window.resources = (function () {
@@ -47,9 +47,13 @@
     }());
 
     function createTableCell(text) {
-        var tdNode = document.createElement('td');
-        tdNode.appendChild(document.createTextNode(String(text)));
-        return tdNode;
+        return wrap(document.createTextNode(String(text)), 'td');
+    }
+
+    function wrap(element, type) {
+        var wrapper = document.createElement(type);
+        wrapper.appendChild(element);
+        return wrapper;
     }
 
     function createButton(text) {
@@ -57,6 +61,7 @@
         button.appendChild(document.createTextNode(String(text)));
         button.classList.add('btn');
         button.classList.add('btn-default');
+        button.classList.add('btn-sm');
         return button;
     }
 
@@ -71,13 +76,12 @@
     }
 
     function createTableRow(resource) {
-        var trNode = document.createElement('tr');
-        trNode.appendChild(createPlayButton(resource));
-        trNode.appendChild(createTableCell(resource.name));
-        trNode.appendChild(createTableCell(formatTime(resource.buffer.duration)));
-        trNode.appendChild(createTableCell(resource.buffer.sampleRate));
-        trNode.appendChild(createTableCell(resource.buffer.numberOfChannels));
-        return trNode;
+        return $(document.createElement('tr'))
+            .append(wrap(createPlayButton(resource), 'td'))
+            .append(createTableCell(resource.name))
+            .append(createTableCell(formatTime(resource.buffer.duration)))
+            .append(createTableCell(resource.buffer.sampleRate))
+            .append(createTableCell(resource.buffer.numberOfChannels)).get(0);
     }
 
     function playResource(key, context) {
@@ -89,36 +93,34 @@
     }
 
     function ResourcesController(el, context) {
-        this.el = el;
+        this.$el = $(el);
         this.context = context;
 
         function renderList() {
-            var tbody = el.querySelector('tbody');
-            tbody.innerHTML = '';
-            resources.list().forEach(function (key) {
-                tbody.appendChild(createTableRow(resources.get(key)));
+            var rows = resources.list().map(function (key) {
+                return createTableRow(resources.get(key));
             });
+
+            this.$el.find('tbody').html(rows);
         }
 
-        this.el.addEventListener('change', function (event) {
-            var input = event.target;
+        $(document).on('resource:add', renderList.bind(this));
+
+        this.$el.on('change', '[type="file"]', function () {
+            var input = this;
             resources.load(input.files[0], context, function () {
                 input.value = null;
-                renderList();
+                $(input).trigger('resource:add');
             });
+        }).on('click', '.btn', function () {
+            playResource(this.dataset.resourceKey, context);
         });
 
-        this.el.addEventListener('click', function (event) {
-            if (event.target.tagName === 'BUTTON') {
-                playResource(event.target.dataset.resourceKey, context);
-            }
-        });
-
-        renderList();
+        renderList.call(this);
 
     }
 
     window.controllers = window.controllers || {};
     window.controllers.Resources = ResourcesController;
 
-}(this));
+}(this, this.jQuery));

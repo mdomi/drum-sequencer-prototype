@@ -13,11 +13,15 @@ module.exports = function (grunt) {
                 compress : false
             },
             dist : {
+                options : {
+                    compress : false
+                },
                 files : {
                     'www/js/main.js' : [
                         'bower_components/jquery/dist/jquery.js',
                         'bower_components/bootstrap/dist/js/bootstrap.js',
                         'js/resources.js',
+                        'js/sequencer.js',
                         'js/main.js'
                     ]
                 }
@@ -43,7 +47,7 @@ module.exports = function (grunt) {
             },
             css : {
                 files : ['css/**/*.css'],
-                tasks : 'cssmin'
+                tasks : ['cssmin']
             },
             gruntfile : {
                 files : ['Gruntfile.js'],

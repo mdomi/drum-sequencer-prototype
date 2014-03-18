@@ -51,13 +51,13 @@
         return new Square();
     };
 
-    function createVolumeInput() {
+    function createVolumeInput(min, max) {
         var input = document.createElement('input');
         input.type = 'range';
         input.classList.add('js-volume');
-        input.min = 0;
-        input.max = 100;
-        input.value = 50;
+        input.min = min;
+        input.max = max;
+        input.value = min + ((max - min) / 2);
         return input;
     }
 
@@ -91,7 +91,7 @@
             resourceSelector = document.createElement('select'),
             squares = [],
             active,
-            volumeControl = createVolumeInput();
+            volumeControl = createVolumeInput(0, 90);
 
         updateResourceSelectorOptions(resourceSelector);
 
@@ -199,11 +199,14 @@
 
         this.$el = $(document.createElement('div'));
 
-        var display = document.createElement('span'),
+        var $rows = $(document.createElement('div')),
+            display = document.createElement('span'),
+            $controls = $(document.createElement('div')),
             tempo = 108,
             timeout,
             currentBeat,
             length = 16,
+            bound = false,
             schedule = function () {
                 var now = timestamp(),
                     next = timePerBeat(tempo * 4);
@@ -214,12 +217,18 @@
 
         this.$el.append(display);
         rows.forEach(function (row) {
-            this.$el.append(row.$el);
+            $rows.append(row.$el);
         }.bind(this));
+        this.$el.append($rows);
+        this.$el.append($controls);
+
+        $('<button class="js-add-row btn btn-default">Add row</button>').appendTo($controls);
 
         this.bindEvents = function () {
+            bound = true;
             invoke(rows, 'bindEvents');
             $(document).on('resource:add', this.updateResources.bind(this));
+            this.$el.on('click', '.js-add-row', this.addRow.bind(this));
         };
 
         this.updateResources = function () {
@@ -269,6 +278,15 @@
             pattern.forEach(function (row, i) {
                 rows[i].loadPattern(row);
             });
+        };
+
+        this.addRow = function () {
+            var row = SequencerRow.create(length, context);
+            rows.push(row);
+            $rows.append(row.$el);
+            if (bound) {
+                row.bindEvents();
+            }
         };
     };
 

@@ -71,6 +71,8 @@ module.exports = function (grunt) {
 
     require('load-grunt-tasks')(grunt);
 
-    grunt.registerTask('default', ['jshint', 'cssmin', 'uglify']);
+    grunt.loadTasks('tasks');
+
+    grunt.registerTask('default', ['jshint', 'cssmin', 'uglify', 'sampleindex']);
     grunt.registerTask('serve', ['default', 'connect:server', 'watch']);
 };

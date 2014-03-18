@@ -32,6 +32,19 @@
             this.$el.on('click', this.toggle.bind(this));
         };
 
+        this.getPattern = function () {
+            return isToggled ? 1 : 0;
+        };
+
+        this.loadPattern = function (active) {
+            isToggled = active ? true : false;
+            if (isToggled) {
+                this.$el.addClass('sequencer-square-toggle');
+            } else {
+                this.$el.removeClass('sequencer-square-toggle');
+            }
+        };
+
     }
 
     Square.create = function () {
@@ -132,6 +145,16 @@
 
         this.updateResources = function () {
             updateResourceSelectorOptions(resourceSelector);
+        };
+
+        this.getPattern = function () {
+            return invoke(squares, 'getPattern');
+        };
+
+        this.loadPattern = function (row) {
+            row.forEach(function (setting, i) {
+                squares[i].loadPattern(setting);
+            });
         };
 
     }
@@ -236,6 +259,16 @@
             if (timeout) {
                 window.clearTimeout(timeout);
             }
+        };
+
+        this.getPattern = function () {
+            return invoke(rows, 'getPattern');
+        };
+
+        this.loadPattern = function (pattern) {
+            pattern.forEach(function (row, i) {
+                rows[i].loadPattern(row);
+            });
         };
     };
 

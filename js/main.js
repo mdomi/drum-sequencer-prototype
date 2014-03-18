@@ -15,6 +15,14 @@
         window.sequencer = sequencer;
 
         new window.controllers.Resources('#resources', context);
+
+        $.ajax({
+            url : 'wav/index.json'
+        }).then(function (index) {
+            index.files.forEach(function (file) {
+                window.resources.read(file.path, context);
+            });
+        });
     });
 
 

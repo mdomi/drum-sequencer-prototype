@@ -1,5 +1,10 @@
 (function (window, $) {
 
+    function last(path) {
+        var parts = path.split('/');
+        return parts[parts.length - 1];
+    }
+
     var document = window.document,
         resources = window.resources = (function () {
         var files = {};
@@ -42,6 +47,32 @@
                         });
                     }
                 });
+            },
+            read : function data(path, context, cb) {
+                var request = new XMLHttpRequest();
+                request.open('GET', path, true); // Path to Audio File
+                request.responseType = 'arraybuffer'; // Read as Binary Data
+
+                request.onload = function() {
+                    context.decodeAudioData(request.response, function (buffer) {
+                        var resource = {
+                            name : last(path),
+                            buffer : buffer
+                        };
+
+                        files[resource.name] = resource;
+                        $(document).trigger('resource:add');
+
+                        if (cb) {
+                            cb({
+                                name : resource.name,
+                                buffer : resource.buffer
+                            });
+                        }
+                    });
+                };
+
+                request.send();
             }
         };
     }());

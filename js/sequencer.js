@@ -42,7 +42,6 @@
         var input = document.createElement('input');
         input.type = 'range';
         input.classList.add('js-volume');
-        input.style.display = 'inline';
         input.min = 0;
         input.max = 100;
         input.value = 50;

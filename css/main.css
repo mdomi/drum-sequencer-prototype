@@ -57,6 +57,7 @@
     margin: 0 auto;
 }
 
-[type="range"] {
-  display : inline;
+input[type="range"] {
+  display: inline;
+  width: auto;
 }

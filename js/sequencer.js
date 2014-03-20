@@ -215,102 +215,110 @@
 
     window.controllers = window.controllers || {};
 
-    window.controllers.Sequencer = function (height, context) {
-        var $controls = $(document.createElement('div'));
 
-        this.$el = $(document.createElement('div'));
-        this._display = document.createElement('span');
-        this._tempo = 108;
-        this._currentBeat = 0;
-        this.context = context;   
-        this.length = 16;
-        this.$rows = $(document.createElement('div'));
-        this._bound = false;
-        this._rows = times(height, SequencerRow.create, this.length, this.context);
+    window.controllers.Sequencer = (function () {
 
-        this.$el.append(this._display);
-        this._rows.forEach(function (row) {
+        function Sequencer(height, context) {
+            var $controls = $(document.createElement('div'));
+
+            this.$el = $(document.createElement('div'));
+            this._display = document.createElement('span');
+            this._tempo = 108;
+            this._currentBeat = 0;
+            this.context = context;   
+            this.length = 16;
+            this.$rows = $(document.createElement('div'));
+            this._bound = false;
+            this._rows = times(height, SequencerRow.create, this.length, this.context);
+
+            this.$el.append(this._display);
+            this._rows.forEach(function (row) {
+                this.$rows.append(row.$el);
+            }.bind(this));
+            this.$el.append(this.$rows);
+            this.$el.append($controls);
+
+            $('<button class="js-add-row btn btn-default">Add row</button>').appendTo($controls);
+
+        }
+
+        Sequencer.prototype._schedule = function () {
+            var now = timestamp(),
+                next = timePerBeat(this._tempo * 4);
+            this._step();
+            this._timeout = window.setTimeout(this._schedule.bind(this), Math.floor(next - (timestamp() - now)));
+        };
+
+        Sequencer.prototype.bindEvents = function () {
+            this._bound = true;
+            invoke(this._rows, 'bindEvents');
+            $(document).on('resource:add', this.updateResources.bind(this));
+            this.$el.on('click', '.js-add-row', this.addRow.bind(this));
+        };
+
+        Sequencer.prototype.updateResources = function () {
+            invoke(this._rows, 'updateResources');
+        };
+
+        Sequencer.prototype._setup = function () {
+            this._currentBeat = 0;
+            invoke(this._rows, 'setActive');
+            this._updateDisplay();
+        };
+
+        Sequencer.prototype._updateDisplay = function () {
+            this._display.innerHTML = pad(Math.floor(this._currentBeat / 4) + 1) + ' - ' + pad(this._currentBeat % 4 + 1);
+        };
+
+        Sequencer.prototype._step = function () {
+            invoke(this._rows, 'setActive', this._currentBeat);
+            this._updateDisplay(this);
+            this._currentBeat = (this._currentBeat + 1) % this.length;
+        };
+
+        Sequencer.prototype.setTempo = function (newTempo) {
+            this._tempo = newTempo;
+        };
+
+        Sequencer.prototype.start = function () {
+            this.stop();
+            this._schedule();
+        };
+
+        Sequencer.prototype.stop = function () {
+            this._setup();
+            if (this._timeout) {
+                window.clearTimeout(this._timeout);
+            }
+        };
+
+        Sequencer.prototype.getPattern = function () {
+            return invoke(this._rows, 'getPattern');
+        };
+
+        Sequencer.prototype.loadPattern = function (pattern) {
+            pattern.forEach(function (row, i) {
+                this._rows[i].loadPattern(row);
+            }.bind(this));
+        };
+
+        Sequencer.prototype.addRow = function () {
+            var row = SequencerRow.create(this.length, this.context);
+            this._rows.push(row);
             this.$rows.append(row.$el);
-        }.bind(this));
-        this.$el.append(this.$rows);
-        this.$el.append($controls);
+            if (this._bound) {
+                row.bindEvents();
+            }
+        };
 
-        $('<button class="js-add-row btn btn-default">Add row</button>').appendTo($controls);
+        Sequencer.prototype.clear = function () {
+            invoke(this._rows, 'clear');
+        };
 
-    };
+        return Sequencer;
+        
+    }());
 
-    window.controllers.Sequencer.prototype._schedule = function () {
-        var now = timestamp(),
-            next = timePerBeat(this._tempo * 4);
-        this._step();
-        this._timeout = window.setTimeout(this._schedule.bind(this), Math.floor(next - (timestamp() - now)));
-    };
-
-    window.controllers.Sequencer.prototype.bindEvents = function () {
-        this._bound = true;
-        invoke(this._rows, 'bindEvents');
-        $(document).on('resource:add', this.updateResources.bind(this));
-        this.$el.on('click', '.js-add-row', this.addRow.bind(this));
-    };
-
-    window.controllers.Sequencer.prototype.updateResources = function () {
-        invoke(this._rows, 'updateResources');
-    };
-
-    window.controllers.Sequencer.prototype._setup = function () {
-        this._currentBeat = 0;
-        invoke(this._rows, 'setActive');
-        this._updateDisplay();
-    };
-
-    window.controllers.Sequencer.prototype._updateDisplay = function () {
-        this._display.innerHTML = pad(Math.floor(this._currentBeat / 4) + 1) + ' - ' + pad(this._currentBeat % 4 + 1);
-    };
-
-    window.controllers.Sequencer.prototype._step = function () {
-        invoke(this._rows, 'setActive', this._currentBeat);
-        this._updateDisplay(this);
-        this._currentBeat = (this._currentBeat + 1) % this.length;
-    };
-
-    window.controllers.Sequencer.prototype.setTempo = function (newTempo) {
-        this._tempo = newTempo;
-    };
-
-    window.controllers.Sequencer.prototype.start = function () {
-        this.stop();
-        this._schedule();
-    };
-
-    window.controllers.Sequencer.prototype.stop = function () {
-        this._setup();
-        if (this._timeout) {
-            window.clearTimeout(this._timeout);
-        }
-    };
-
-    window.controllers.Sequencer.prototype.getPattern = function () {
-        return invoke(this._rows, 'getPattern');
-    };
-
-    window.controllers.Sequencer.prototype.loadPattern = function (pattern) {
-        pattern.forEach(function (row, i) {
-            this._rows[i].loadPattern(row);
-        }.bind(this));
-    };
-
-    window.controllers.Sequencer.prototype.addRow = function () {
-        var row = SequencerRow.create(this.length, this.context);
-        this._rows.push(row);
-        this.$rows.append(row.$el);
-        if (this._bound) {
-            row.bindEvents();
-        }
-    };
-
-    window.controllers.Sequencer.prototype.clear = function () {
-        invoke(this._rows, 'clear');
-    };
 
     window.controllers.SequencerControls = (function () {
 

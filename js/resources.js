@@ -1,4 +1,4 @@
-(function (window, $) {
+(function (window, $, async) {
 
     function last(path) {
         var parts = path.split('/');
@@ -40,6 +40,8 @@
                         name : file.name,
                         buffer : audioBuffer
                     };
+
+                    $(document).trigger('resource:add');
                     if (cb) {
                         cb({
                             name : resource.name,
@@ -115,43 +117,56 @@
             .append(createTableCell(resource.buffer.numberOfChannels)).get(0);
     }
 
-    function playResource(key, context) {
-        var resource = resources.get(key),
-            source = context.createBufferSource();
-        source.buffer = resource.buffer;
-        source.connect(context.destination);
-        source.noteOn(0);
-    }
-
     function ResourcesController(el, context) {
+
         this.$el = $(el);
         this.context = context;
+        this.gainNode = context.createGainNode();
+        this.gainNode.gain.value = 0.5;
+        this.gainNode.connect(this.context.destination);
 
-        function renderList() {
-            var rows = resources.list().map(function (key) {
-                return createTableRow(resources.get(key));
-            });
+        $(document).on('resource:add', this._renderList.bind(this));
 
-            this.$el.find('tbody').html(rows);
-        }
+        this.$el.on('change', '[type="file"]', this._triggerFileLoads.bind(this))
+            .on('click', '.btn', this.playResource.bind(this));
 
-        $(document).on('resource:add', renderList.bind(this));
+        this._renderList();
+    }
 
-        this.$el.on('change', '[type="file"]', function () {
-            var input = this;
-            resources.load(input.files[0], context, function () {
-                input.value = null;
-                $(input).trigger('resource:add');
-            });
-        }).on('click', '.btn', function () {
-            playResource(this.dataset.resourceKey, context);
+    function clearFileInput(input) {
+        input.value = null;
+        input.disabled = false;
+    }
+
+    ResourcesController.prototype._triggerFileLoads = function (event) {
+        var input = event.target;
+        input.disabled = true;
+        async.forEach(input.files, this._loadFile.bind(this), clearFileInput.bind(this, input));
+    };
+
+    ResourcesController.prototype._loadFile = function (file, cb) {
+        setTimeout(function () {
+            resources.load(file, this.context, cb);    
+        }.bind(this));
+    };
+
+    ResourcesController.prototype.playResource = function (event) {
+        var resource = resources.get(event.target.dataset.resourceKey),
+            source = this.context.createBufferSource();
+        source.buffer = resource.buffer;
+        source.connect(this.gainNode);
+        source.noteOn(0);
+    };
+
+    ResourcesController.prototype._renderList = function () {
+        var rows = resources.list().map(function (key) {
+            return createTableRow(resources.get(key));
         });
 
-        renderList.call(this);
-
-    }
+        this.$el.find('tbody').html(rows);
+    };
 
     window.controllers = window.controllers || {};
     window.controllers.Resources = ResourcesController;
 
-}(this, this.jQuery));
+}(this, this.jQuery, this.async));

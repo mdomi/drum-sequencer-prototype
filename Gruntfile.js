@@ -20,6 +20,7 @@ module.exports = function (grunt) {
                     'www/js/main.js' : [
                         'bower_components/jquery/dist/jquery.js',
                         'bower_components/bootstrap/dist/js/bootstrap.js',
+                        'bower_components/async/lib/async.js',
                         'js/resources.js',
                         'js/sequencer.js',
                         'js/main.js'

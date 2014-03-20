@@ -49,9 +49,16 @@
                         <h1>Sequencer</h1>
                         <hr>
                         <div class="form-inline" id="controls">
-                            <button class="btn btn-default js-play">Play</button>
-                            <button class="btn btn-default js-stop">Stop</button>
-                            <input class="form-control js-tempo" type="number" min="50" max="180" value="120" step="1">
+                            <div class="form-group">
+                                <button class="btn btn-default js-clear">Clear</button>
+                                <button class="btn btn-default js-play">Play</button>
+                                <button class="btn btn-default js-stop">Stop</button>
+                                <input class="form-control js-tempo" type="number" min="50" max="180" value="120" step="1">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control js-name" type="text">
+                                <button class="btn btn-default js-save">Save</button>
+                            </div>
                         </div>
                         <div id="main"></div>
                     </div>

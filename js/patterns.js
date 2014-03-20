@@ -1,7 +1,10 @@
-(function (window) {
+(function (window, $) {
+
+    var document = window.document;
 
     function writeIndex(index) {
         window.localStorage.setItem('sequence_index', JSON.stringify(index));
+        return index;
     }
 
     function getIndex() {
@@ -9,11 +12,11 @@
         if (!index) {
             index = {
                 files : {},
-                nextId : 0
+                nextId : 1
             };
-            writeIndex(index);
+            return writeIndex(index);
         }
-        return index;
+        return JSON.parse(index);
     }
 
     window.patterns = {
@@ -27,15 +30,38 @@
             var index = getIndex();
             return index.files;
         },
-        add : function (name, sequence) {
+        save : function (name, pattern) {
             var index = getIndex(),
                 newEntry = {
-                    name : name, 
-                    id : index.nextId++
+                    name : name,
+                    pattern : pattern,
+                    id : ++index.nextId,
+                    saved : new Date().getTime()
                 };
+            if (index.files.hasOwnProperty(name)) {
+                newEntry.id = index.files[name].id;
+            }
             index.files[name] = newEntry;
             writeIndex(index);
-        }
+            $(document).trigger('pattern:add');
+        },
+        currentId : function () {
+            return getIndex().nextId;
+        },
+        mostRecent : function () {
+            var index = getIndex();
+            return Object.keys(index.files).reduce(function (result, pattern) {
+                var current = index.files[pattern];
+                if (!result) {
+                    return current;
+                }
+
+                if (current.saved > result.saved) {
+                    return current;
+                }
+                return result;
+            }, null);
+        },
     };
 
-}(this));
+}(this, this.jQuery));

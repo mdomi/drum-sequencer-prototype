@@ -1,5 +1,9 @@
 {
     "node" : false,
     "browser" : true,
-    "undef" : true
+    "undef" : true,
+    "unused" : true,
+    "globals" : {
+        "console" : false
+    }
 }

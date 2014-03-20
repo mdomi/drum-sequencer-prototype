@@ -333,13 +333,17 @@
             this.$el.on('click', '.js-play', this.sequencer.start.bind(this.sequencer));
             this.$el.on('click', '.js-stop', this.sequencer.stop.bind(this.sequencer));
             this.$el.on('change', '.js-tempo', this._handleTempoInputUpdate.bind(this));
-            this.$el.on('click', '.js-clear', function () {
-                this.sequencer.clear();
-            }.bind(this));
-            this.$el.on('click', '.js-save', function () {
-                window.patterns.save(this.sequencer.name, this.sequencer.getPattern());
-            }.bind(this));
+            this.$el.on('click', '.js-clear', this._clear.bind(this));
+            this.$el.on('click', '.js-save', this._save.bind(this));
             this.$el.on('change', '.js-name', this._handleNameUpdate.bind(this));
+        };
+
+        SequencerControls.prototype._clear = function () {
+            this.sequencer.clear();
+        };
+
+        SequencerControls.prototype._save = function () {
+            window.patterns.save(this.sequencer.name, this.sequencer.getPattern());
         };
 
         SequencerControls.prototype._handleTempoInputUpdate = function (event) {

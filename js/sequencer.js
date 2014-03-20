@@ -8,44 +8,43 @@
     function Square() {
         this.$el = $(document.createElement('span'));
         this.$el.addClass('sequencer-square');
-
-        var isToggled = false;
-
-        this.activate = function () {
-            this.$el.addClass('sequencer-square-active');
-        };
-
-        this.deactivate = function () {
-            this.$el.removeClass('sequencer-square-active');
-        };
-
-        this.toggle = function () {
-            this.$el.toggleClass('sequencer-square-toggle');
-            isToggled = !isToggled;
-        }.bind(this);
-
-        this.toggled = function () {
-            return isToggled;
-        };
-
-        this.bindEvents = function () {
-            this.$el.on('click', this.toggle.bind(this));
-        };
-
-        this.getPattern = function () {
-            return isToggled ? 1 : 0;
-        };
-
-        this.loadPattern = function (active) {
-            isToggled = active ? true : false;
-            if (isToggled) {
-                this.$el.addClass('sequencer-square-toggle');
-            } else {
-                this.$el.removeClass('sequencer-square-toggle');
-            }
-        };
+        this._isToggled = false;
 
     }
+
+    Square.prototype.toggle = function () {
+        this.$el.toggleClass('sequencer-square-toggle');
+        this._isToggled = !this._isToggled;
+    }.bind(this);
+
+    Square.prototype.toggled = function () {
+        return this._isToggled;
+    };
+
+    Square.prototype.bindEvents = function () {
+        this.$el.on('click', this.toggle.bind(this));
+    };
+
+    Square.prototype.getPattern = function () {
+        return this._isToggled ? 1 : 0;
+    };
+
+    Square.prototype.loadPattern = function (active) {
+        this._isToggled = active ? true : false;
+        if (this._isToggled) {
+            this.$el.addClass('sequencer-square-toggle');
+        } else {
+            this.$el.removeClass('sequencer-square-toggle');
+        }
+    };
+
+    Square.prototype.activate = function () {
+        this.$el.addClass('sequencer-square-active');
+    };
+
+    Square.prototype.deactivate = function () {
+        this.$el.removeClass('sequencer-square-active');
+    };
 
     Square.create = function () {
         return new Square();

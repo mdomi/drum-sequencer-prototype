@@ -91,7 +91,8 @@
             resourceSelector = document.createElement('select'),
             squares = [],
             active,
-            volumeControl = createVolumeInput(0, 90);
+            volumeControl = createVolumeInput(0, 90),
+            source;
 
         updateResourceSelectorOptions(resourceSelector);
 
@@ -109,7 +110,10 @@
         function play() {
             var resource = window.resources.get(resourceSelector.value);
             if (resource) {
-                var source = context.createBufferSource();
+                if (source) {
+                    source.noteOff(0);
+                }
+                source = context.createBufferSource();
                 source.buffer = resource.buffer;
                 source.connect(node);
                 source.noteOn(0);

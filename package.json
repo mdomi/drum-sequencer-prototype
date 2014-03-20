@@ -1,0 +1,22 @@
+{
+  "name": "sequencer",
+  "version": "0.0.1",
+  "description": "sequencer",
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "devDependencies": {
+    "grunt-contrib-watch": "^0.5.3",
+    "grunt": "^0.4.2",
+    "grunt-contrib-connect": "^0.7.1",
+    "grunt-contrib-concat": "^0.3.0",
+    "grunt-contrib-jshint": "^0.8.0",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-contrib-cssmin": "~0.9.0",
+    "jshint-stylish": "^0.1.5"
+  },
+  "dependencies": {
+    "load-grunt-tasks": "~0.4.0"
+  }
+}

@@ -66,7 +66,7 @@
                         $(document).trigger('resource:add');
 
                         if (cb) {
-                            cb({
+                            cb(null, {
                                 name : resource.name,
                                 buffer : resource.buffer
                             });

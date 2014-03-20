@@ -3,13 +3,16 @@
     var document = window.document,
         MS_PER_S = 1000,
         S_PER_MIN = 60,
-        slice = Array.prototype.slice;
+        slice = Array.prototype.slice,
+        STATES = {
+            INACTIVE : 0,
+            ACTIVE : 1
+        };
 
     function Square() {
         this.$el = $(document.createElement('span'));
         this.$el.addClass('sequencer-square');
         this._isToggled = false;
-
     }
 
     Square.prototype.clear = function () {
@@ -30,11 +33,13 @@
     };
 
     Square.prototype.getPattern = function () {
-        return this._isToggled ? 1 : 0;
+        return {
+            state : this._isToggled ? STATES.ACTIVE : STATES.INACTIVE
+        };
     };
 
-    Square.prototype.loadPattern = function (active) {
-        this._isToggled = active ? true : false;
+    Square.prototype.loadPattern = function (pattern) {
+        this._isToggled = pattern.state === STATES.ACTIVE ? true : false;
         if (this._isToggled) {
             this.$el.addClass('sequencer-square-toggle');
         } else {
@@ -155,11 +160,15 @@
         };
 
         this.getPattern = function () {
-            return invoke(squares, 'getPattern');
+            return {
+                sample : resourceSelector.value,
+                pattern : invoke(squares, 'getPattern')
+            };
         };
 
-        this.loadPattern = function (row) {
-            row.forEach(function (setting, i) {
+        this.loadPattern = function (pattern) {
+            resourceSelector.value = pattern.sample;
+            pattern.pattern.forEach(function (setting, i) {
                 squares[i].loadPattern(setting);
             });
         };
@@ -226,20 +235,7 @@
         this.$el.append(this.$rows);
         this.$el.append($controls);
 
-        this._loadInitialPattern();
-
         $('<button class="js-add-row btn btn-default">Add row</button>').appendTo($controls);
-
-    };
-
-    window.controllers.Sequencer.prototype._loadInitialPattern = function () {
-        var recent = window.patterns.mostRecent();
-        if (recent)  {
-            this.name = recent.name;
-            this.loadPattern(recent.pattern);
-        } else {
-            this.name = 'Pattern ' + window.patterns.currentId();
-        }
 
     };
 
@@ -316,24 +312,47 @@
         invoke(this._rows, 'clear');
     };
 
-    window.controllers.SequencerControls = function (el, sequencer) {
-        this.$el = $(el);
+    window.controllers.SequencerControls = (function () {
 
-        this.bindEvents = function () {
-            this.$el.on('click', '.js-play', sequencer.start.bind(sequencer));
-            this.$el.on('click', '.js-stop', sequencer.stop.bind(sequencer));
+        function SequencerControls(el, sequencer) {
+            this.$el = $(el);
+            this.sequencer = sequencer;
+
+            this.$el.find('.js-name').val(sequencer.name);
+        }
+
+        SequencerControls.prototype.bindEvents = function () {
+            this.$el.on('click', '.js-play', this.sequencer.start.bind(this.sequencer));
+            this.$el.on('click', '.js-stop', this.sequencer.stop.bind(this.sequencer));
             this.$el.on('change', '.js-tempo', function () {
-                sequencer.setTempo(parseInt(this.value, 10));
-            });
+                this.sequencer.setTempo(parseInt(this.value, 10));
+            }.bind(this));
             this.$el.on('click', '.js-clear', function () {
-                sequencer.clear();
-            });
+                this.sequencer.clear();
+            }.bind(this));
             this.$el.on('click', '.js-save', function () {
-                window.patterns.save(sequencer.name, sequencer.getPattern());
-            });
+                window.patterns.save(this.sequencer.name, this.sequencer.getPattern());
+            }.bind(this));
+            this.$el.on('change', '.js-name', this._handleNameUpdate.bind(this));
         };
 
-        this.$el.find('.js-name').val(sequencer.name);
-    };
+        SequencerControls.prototype._handleNameUpdate = function (event) {
+            this.sequencer.name = event.target.value;
+        };
+
+        SequencerControls.prototype.loadInitialPattern = function () {
+            var recent = window.patterns.mostRecent();
+            if (recent)  {
+                this.sequencer.name = recent.name;
+                this.sequencer.loadPattern(recent.pattern);
+            } else {
+                this.sequencer.name = 'Pattern ' + window.patterns.currentId();
+            }
+            this.$el.find('.js-name').val(this.sequencer.name);
+        };
+
+        return SequencerControls;
+        
+    }());
 
 }(this, this.jQuery));

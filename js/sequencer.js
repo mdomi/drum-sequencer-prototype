@@ -3,7 +3,11 @@
     var document = window.document,
         MS_PER_S = 1000,
         S_PER_MIN = 60,
-        slice = Array.prototype.slice;
+        slice = Array.prototype.slice,
+        STATES = {
+            INACTIVE : 0,
+            ACTIVE : 1
+        };
 
     function Square() {
         this.$el = $(document.createElement('span'));
@@ -29,11 +33,13 @@
     };
 
     Square.prototype.getPattern = function () {
-        return this._isToggled ? 1 : 0;
+        return {
+            state : this._isToggled ? STATES.ACTIVE : STATES.INACTIVE
+        };
     };
 
-    Square.prototype.loadPattern = function (active) {
-        this._isToggled = active ? true : false;
+    Square.prototype.loadPattern = function (pattern) {
+        this._isToggled = pattern.state === STATES.ACTIVE ? true : false;
         if (this._isToggled) {
             this.$el.addClass('sequencer-square-toggle');
         } else {
@@ -327,6 +333,11 @@
             this.$el.on('click', '.js-save', function () {
                 window.patterns.save(this.sequencer.name, this.sequencer.getPattern());
             }.bind(this));
+            this.$el.on('change', '.js-name', this._handleNameUpdate.bind(this));
+        };
+
+        SequencerControls.prototype._handleNameUpdate = function (event) {
+            this.sequencer.name = event.target.value;
         };
 
         SequencerControls.prototype.loadInitialPattern = function () {

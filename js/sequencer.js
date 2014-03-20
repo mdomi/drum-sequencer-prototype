@@ -332,9 +332,7 @@
         SequencerControls.prototype.bindEvents = function () {
             this.$el.on('click', '.js-play', this.sequencer.start.bind(this.sequencer));
             this.$el.on('click', '.js-stop', this.sequencer.stop.bind(this.sequencer));
-            this.$el.on('change', '.js-tempo', function () {
-                this.sequencer.setTempo(parseInt(this.value, 10));
-            }.bind(this));
+            this.$el.on('change', '.js-tempo', this._handleTempoInputUpdate.bind(this));
             this.$el.on('click', '.js-clear', function () {
                 this.sequencer.clear();
             }.bind(this));
@@ -342,6 +340,10 @@
                 window.patterns.save(this.sequencer.name, this.sequencer.getPattern());
             }.bind(this));
             this.$el.on('change', '.js-name', this._handleNameUpdate.bind(this));
+        };
+
+        SequencerControls.prototype._handleTempoInputUpdate = function (event) {
+            this.sequencer.setTempo(parseInt(event.target.value, 10));    
         };
 
         SequencerControls.prototype._handleNameUpdate = function (event) {

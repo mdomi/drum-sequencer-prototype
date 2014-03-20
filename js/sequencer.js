@@ -15,7 +15,7 @@
     Square.prototype.toggle = function () {
         this.$el.toggleClass('sequencer-square-toggle');
         this._isToggled = !this._isToggled;
-    }.bind(this);
+    };
 
     Square.prototype.toggled = function () {
         return this._isToggled;

@@ -104,7 +104,6 @@
 
         updateResourceSelectorOptions(resourceSelector);
 
-        node.connect(context.destination);
         node.gain.value = volumeControl.value / 100.0;
 
         squares = times(width, Square.create);
@@ -114,6 +113,14 @@
         squares.forEach(function (square) {
             this.$el.append(square.$el);
         }.bind(this));
+
+        this.connect = function (destination) {
+            node.connect(destination);
+        };
+
+        this.disconnect = function () {
+            node.disconnect();
+        };
 
         function play() {
             var resource = window.resources.get(resourceSelector.value);
@@ -229,18 +236,29 @@
             this.length = 16;
             this.$rows = $(document.createElement('div'));
             this._bound = false;
-            this._rows = times(height, SequencerRow.create, this.length, this.context);
+            this._rows = [];
+            this._destinations = [];
 
             this.$el.append(this._display);
-            this._rows.forEach(function (row) {
-                this.$rows.append(row.$el);
-            }.bind(this));
+
             this.$el.append(this.$rows);
             this.$el.append($controls);
+
+            times(height, this.addRow.bind(this));
 
             $('<button class="js-add-row btn btn-default">Add row</button>').appendTo($controls);
 
         }
+
+        Sequencer.prototype.connect = function (destination) {
+            invoke(this._rows, 'connect', destination);
+            this._destinations.push(destination);
+        };
+
+        Sequencer.prototype.disconnect = function () {
+            invoke(this._rows, 'disconnect');
+            this._destinations = [];
+        };
 
         Sequencer.prototype._schedule = function () {
             var now = timestamp(),
@@ -304,6 +322,9 @@
 
         Sequencer.prototype.addRow = function () {
             var row = SequencerRow.create(this.length, this.context);
+            this._destinations.forEach(function (destination) {
+                row.connect(destination);
+            });
             this._rows.push(row);
             this.$rows.append(row.$el);
             if (this._bound) {

@@ -10,6 +10,7 @@
 
         sequencer.$el.appendTo('#main');
         sequencer.bindEvents();
+        sequencer.connect(context.destination);
         controls.bindEvents();
 
         window.sequencer = sequencer;

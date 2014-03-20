@@ -1,0 +1,27 @@
+{
+  "name": "drum-sequencer-prototype",
+  "version": "0.0.1",
+  "homepage": "https://github.com/mdomi/drum-sequencer-prototype",
+  "authors": [
+    "Mike Dominice <mike@mikedominice.com>"
+  ],
+  "description": "sequencer",
+  "main": "www/index.html",
+  "keywords": [
+    "midi",
+    "drums"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.1.1",
+    "font-awesome": "~4.0.3",
+    "async": "~0.2.10"
+  }
+}

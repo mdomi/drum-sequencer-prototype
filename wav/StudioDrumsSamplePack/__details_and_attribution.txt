@@ -1,0 +1,450 @@
+
+=================== FREESOUND ATTRIBUTION FORM =======================
+
+This form below lists all the samples in this pack with their descriptions and tags.
+You can use this form to attribute samples to users when you use them.
+
+=========================== CUT HERE =================================
+
+File:
+	Name: "prac - hat 2.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=421
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+	By "nicStage" : bright, half-open high hat with room sound.
+
+Tags:
+	drums hi-hat percussion 
+======================================================================
+
+File:
+	Name: "prac - hat 3.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=422
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums hi-hat percussion 
+======================================================================
+
+File:
+	Name: "prac - hat open 2.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=423
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums hi-hat percussion 
+======================================================================
+
+File:
+	Name: "prac - hat open 3.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=424
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums hi-hat percussion 
+======================================================================
+
+File:
+	Name: "prac - hat open.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=425
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums hi-hat percussion 
+======================================================================
+
+File:
+	Name: "prac - hat.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=426
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+	By "nicStage" : half open hi-hat with a bit of room sound.
+	By "dudwhersmyguitar" : hi hat mid closed
+
+Tags:
+	drums hi-hat percussion 
+======================================================================
+
+File:
+	Name: "prac - kick light.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=427
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums kick percussion 
+======================================================================
+
+File:
+	Name: "prac - kick.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=428
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+	By "nicStage" : standard single kick drum.  the drum is not dampened very much, producing a more natural and open sound.
+
+Tags:
+	drums kick percussion 
+======================================================================
+
+File:
+	Name: "prac - perc 1.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=429
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums percussion rim 
+======================================================================
+
+File:
+	Name: "prac - perc 2.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=430
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums percussion rim 
+======================================================================
+
+File:
+	Name: "prac - perc 3.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=431
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+	By "nicStage" : small rimshot with plenty of room sound.
+
+Tags:
+	drums percussion rim 
+======================================================================
+
+File:
+	Name: "prac - perc 4.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=432
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums percussion rim 
+======================================================================
+
+File:
+	Name: "prac - perc 5.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=433
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums percussion rim 
+======================================================================
+
+File:
+	Name: "prac - ride bell loud.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=434
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	cymbal drums percussion 
+======================================================================
+
+File:
+	Name: "prac - ride bell.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=435
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	cymbal drums percussion 
+======================================================================
+
+File:
+	Name: "prac - ride.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=436
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	cymbal drums percussion 
+======================================================================
+
+File:
+	Name: "prac - sidestick 2.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=437
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums percussion sidestick wood-block 
+======================================================================
+
+File:
+	Name: "prac - sidestick.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=438
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums percussion sidestick wood-block 
+======================================================================
+
+File:
+	Name: "prac - snare 2.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=439
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+	By "nicStage" : standard snare sample.  lower/mid tuning on the head.
+
+Tags:
+	drums percussion snare 
+======================================================================
+
+File:
+	Name: "prac - snare off.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=440
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums percussion snare 
+======================================================================
+
+File:
+	Name: "prac - snare rim.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=441
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums percussion snare 
+======================================================================
+
+File:
+	Name: "prac - snare rimshot 2.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=442
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums percussion snare 
+======================================================================
+
+File:
+	Name: "prac - snare rimshot.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=443
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums percussion snare 
+======================================================================
+
+File:
+	Name: "prac - snare roll short 2.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=444
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums percussion roll snare 
+======================================================================
+
+File:
+	Name: "prac - snare roll short.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=445
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums percussion roll snare 
+======================================================================
+
+File:
+	Name: "prac - snare roll.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=446
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums percussion roll snare 
+======================================================================
+
+File:
+	Name: "prac - snare.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=447
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums percussion snare 
+======================================================================
+
+File:
+	Name: "prac - tom light.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=448
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+
+Tags:
+	drums percussion tom 
+======================================================================
+
+File:
+	Name: "prac - tom.wav"
+	Url: http://www.freesound.org/samplesViewSingle.php?id=449
+	Date of upload: 2005-04-06 06:01:43
+	
+Designer / Creator / Uploader:
+	Name: "TicTacShutUp"
+	Url: http://www.freesound.org/usersViewSingle.php?id=196
+	
+Description:
+	By "TicTacShutUp" : Recorded in a long hallway with two AKG C4000Bs as overheads and sm57s on everything else. No fake reverb!
+
+Tags:
+	drums percussion tom 
+======================================================================
+

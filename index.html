@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Sequencer Experiment</title>
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Sequencer</a>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-3 col-md-2 sidebar">
+                    <ul class="nav nav-sidebar">
+                        <li class="active"><a href="#resources" data-toggle="tab">Resources</a></li>
+                        <li><a href="#sequencer" data-toggle="tab">Sequencer</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main tab-content">
+                    <div class="tab-pane active" id="resources">
+                        <h1>Resources</h1>
+                        <hr>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Preview</th>
+                                    <th>Name</th>
+                                    <th>Duration</th>
+                                    <th>Sample Rate</th>
+                                    <th># Channels</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <hr>
+                        <form class="form">
+                            <div class="form-group">
+                                <label for="new-resource">Load new files:</label>
+                                <input type="file" class="js-file" multiple accept="audio/x-wav">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="sequencer">
+                        <h1>Sequencer</h1>
+                        <hr>
+                        <div class="form-inline" id="controls">
+                            <div class="form-group">
+                                <button class="btn btn-default js-clear">Clear</button>
+                                <button class="btn btn-default js-play">Play</button>
+                                <button class="btn btn-default js-stop">Stop</button>
+                                <input class="form-control js-tempo" type="number" min="50" max="180" value="120" step="1">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control js-name" type="text">
+                                <button class="btn btn-default js-save">Save</button>
+                            </div>
+                        </div>
+                        <div id="main"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/main.js"></script>
+    </body>
+</html>

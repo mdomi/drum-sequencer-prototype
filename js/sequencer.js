@@ -9,55 +9,60 @@
             ACTIVE : 1
         };
 
-    function Square() {
-        this.$el = $(document.createElement('span'));
-        this.$el.addClass('sequencer-square');
-        this._isToggled = false;
-    }
+    var Square = (function () {
 
-    Square.prototype.clear = function () {
-        this.loadPattern(0);
-    };
-
-    Square.prototype.toggle = function () {
-        this.$el.toggleClass('sequencer-square-toggle');
-        this._isToggled = !this._isToggled;
-    };
-
-    Square.prototype.toggled = function () {
-        return this._isToggled;
-    };
-
-    Square.prototype.bindEvents = function () {
-        this.$el.on('click', this.toggle.bind(this));
-    };
-
-    Square.prototype.getPattern = function () {
-        return {
-            state : this._isToggled ? STATES.ACTIVE : STATES.INACTIVE
-        };
-    };
-
-    Square.prototype.loadPattern = function (pattern) {
-        this._isToggled = pattern.state === STATES.ACTIVE ? true : false;
-        if (this._isToggled) {
-            this.$el.addClass('sequencer-square-toggle');
-        } else {
-            this.$el.removeClass('sequencer-square-toggle');
+        function Square() {
+            this.$el = $(document.createElement('span'));
+            this.$el.addClass('sequencer-square');
+            this._isToggled = false;
         }
-    };
 
-    Square.prototype.activate = function () {
-        this.$el.addClass('sequencer-square-active');
-    };
+        Square.prototype.clear = function () {
+            this.loadPattern(0);
+        };
 
-    Square.prototype.deactivate = function () {
-        this.$el.removeClass('sequencer-square-active');
-    };
+        Square.prototype.toggle = function () {
+            this.$el.toggleClass('sequencer-square-toggle');
+            this._isToggled = !this._isToggled;
+        };
 
-    Square.create = function () {
-        return new Square();
-    };
+        Square.prototype.toggled = function () {
+            return this._isToggled;
+        };
+
+        Square.prototype.bindEvents = function () {
+            this.$el.on('click', this.toggle.bind(this));
+        };
+
+        Square.prototype.getPattern = function () {
+            return {
+                state : this._isToggled ? STATES.ACTIVE : STATES.INACTIVE
+            };
+        };
+
+        Square.prototype.loadPattern = function (pattern) {
+            this._isToggled = pattern.state === STATES.ACTIVE ? true : false;
+            if (this._isToggled) {
+                this.$el.addClass('sequencer-square-toggle');
+            } else {
+                this.$el.removeClass('sequencer-square-toggle');
+            }
+        };
+
+        Square.prototype.activate = function () {
+            this.$el.addClass('sequencer-square-active');
+        };
+
+        Square.prototype.deactivate = function () {
+            this.$el.removeClass('sequencer-square-active');
+        };
+
+        Square.create = function () {
+            return new Square();
+        };
+
+        return Square;
+    }());
 
     function createVolumeInput(min, max) {
         var input = document.createElement('input');
@@ -95,8 +100,7 @@
     function SequencerRow(width, context) {
         this.$el = $(document.createElement('div')).addClass('form-inline');
 
-        var node = context.createGainNode(),
-            resourceSelector = document.createElement('select'),
+        var resourceSelector = document.createElement('select'),
             squares = [],
             active,
             volumeControl = createVolumeInput(0, 90),
@@ -104,7 +108,8 @@
 
         updateResourceSelectorOptions(resourceSelector);
 
-        node.gain.value = volumeControl.value / 100.0;
+        this.output = context.createGainNode();
+        this.output.gain.value = volumeControl.value / 100.0;
 
         squares = times(width, Square.create);
 
@@ -114,14 +119,6 @@
             this.$el.append(square.$el);
         }.bind(this));
 
-        this.connect = function (destination) {
-            node.connect(destination);
-        };
-
-        this.disconnect = function () {
-            node.disconnect();
-        };
-
         function play() {
             var resource = window.resources.get(resourceSelector.value);
             if (resource) {
@@ -130,7 +127,7 @@
                 }
                 source = context.createBufferSource();
                 source.buffer = resource.buffer;
-                source.connect(node);
+                source.connect(this.output);
                 source.noteOn(0);
             }
         }
@@ -138,8 +135,8 @@
         this.bindEvents = function () {
             invoke(squares, 'bindEvents');
             volumeControl.addEventListener('change', function () {
-                node.gain.value = volumeControl.value / 100.0;
-            });
+                this.output.gain.value = volumeControl.value / 100.0;
+            }.bind(this));
         };
 
         this.setActive = function (index) {
@@ -150,7 +147,7 @@
             if (active) {
                 active.activate();
                 if (active.toggled()) {
-                    play();
+                    play.call(this);
                 }
             }
         };
@@ -237,6 +234,7 @@
             this.$rows = $(document.createElement('div'));
             this._bound = false;
             this._rows = [];
+            this.output = context.createGainNode();
             this._destinations = [];
 
             this.$el.append(this._display);
@@ -249,16 +247,6 @@
             $('<button class="js-add-row btn btn-default">Add row</button>').appendTo($controls);
 
         }
-
-        Sequencer.prototype.connect = function (destination) {
-            invoke(this._rows, 'connect', destination);
-            this._destinations.push(destination);
-        };
-
-        Sequencer.prototype.disconnect = function () {
-            invoke(this._rows, 'disconnect');
-            this._destinations = [];
-        };
 
         Sequencer.prototype._schedule = function () {
             var now = timestamp(),
@@ -322,9 +310,8 @@
 
         Sequencer.prototype.addRow = function () {
             var row = SequencerRow.create(this.length, this.context);
-            this._destinations.forEach(function (destination) {
-                row.connect(destination);
-            });
+
+            row.output.connect(this.output);
             this._rows.push(row);
             this.$rows.append(row.$el);
             if (this._bound) {

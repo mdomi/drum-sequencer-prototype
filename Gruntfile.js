@@ -9,18 +9,14 @@ module.exports = function (grunt) {
             }
         },
         uglify : {
-            options : {
-                compress : false
-            },
             dist : {
-                options : {
-                    compress : false
-                },
                 files : {
                     'www/js/main.js' : [
                         'bower_components/jquery/dist/jquery.js',
                         'bower_components/bootstrap/dist/js/bootstrap.js',
                         'bower_components/async/lib/async.js',
+                        'js/util.js',
+                        'js/levelmeter.js',
                         'js/patterns.js',
                         'js/resources.js',
                         'js/sequencer.js',
@@ -63,7 +59,7 @@ module.exports = function (grunt) {
         connect : {
             server : {
                 options : {
-                    port : 8000,
+                    port : parseInt(process.env.CONNECT_PORT || '8000', 10),
                     base : 'www',
                     livereload : true
                 }

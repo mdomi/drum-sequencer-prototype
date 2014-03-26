@@ -63,7 +63,7 @@ module.exports = function (grunt) {
         connect : {
             server : {
                 options : {
-                    port : 8000,
+                    port : parseInt(process.env.CONNECT_PORT || '8000', 10),
                     base : 'www',
                     livereload : true
                 }
